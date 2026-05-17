@@ -425,6 +425,21 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
 .tag-fund { background: var(--purple-bg); color: var(--purple); }
 .news-title { color: var(--text-secondary); line-height: 1.5; }
 .news-title strong { color: var(--text-primary); }
+.news-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  color: var(--accent);
+  text-decoration: none;
+  margin-left: 6px;
+  opacity: 0.7;
+  transition: opacity 0.2s, color 0.2s;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.news-link:hover { opacity: 1; color: #60a5fa; text-decoration: underline; }
+.news-link .link-icon { font-size: 10px; }
 
 /* ===== MATRIX ===== */
 .matrix-container {
@@ -627,19 +642,19 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
   <div class="section" id="news">
     <h2 class="section-title">📰 最新动态 <span class="count">— 2026年行业要闻追踪</span></h2>
     <div class="news-list">
-      <div class="news-item"><span class="news-date">05-17</span><span class="news-tag tag-new">新</span><span class="news-title">全球智能爬宠箱控制器市场2025年规模<strong>$2.87亿</strong>，预计2034年达$5.63亿，CAGR 7.7%</span></div>
-      <div class="news-item"><span class="news-date">04-30</span><span class="news-tag tag-hot">热</span><span class="news-title"><strong>爬托邦</strong>创始人孟凡菁受访：国内唯一获融资爬宠品牌，20年养宠经验+科研团队攻克电路集成</span></div>
-      <div class="news-item"><span class="news-date">04-17</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>InnoYolo智阖</strong>规划未来1-2年推出"智盒·绿洲/蔚蓝/极光"系列，接入AIGC+VR生态</span></div>
-      <div class="news-item"><span class="news-date">04-01</span><span class="news-tag tag-fund">融资</span><span class="news-title"><strong>爬托邦</strong>获数百万元天使轮融资——2026年爬宠赛道首笔对外披露融资</span></div>
-      <div class="news-item"><span class="news-date">03-31</span><span class="news-tag tag-hot">热</span><span class="news-title">央视报道爬托邦融资，点亮爬宠行业资本化新曙光</span></div>
-      <div class="news-item"><span class="news-date">03-09</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>宠尔顿PILTON</strong>发布Z系列超级旗舰款，整合SaaS管理+智能终端，开拓B端商用市场</span></div>
-      <div class="news-item"><span class="news-date">02-xx</span><span class="news-tag tag-new">新</span><span class="news-title"><strong>爬托邦</strong>天猫首发单月售出200台，小红书种草+天猫转化策略初见成效</span></div>
-      <div class="news-item"><span class="news-date">01-26</span><span class="news-tag tag-trend">趋势</span><span class="news-title">宠尔顿开启"人宠居住新生态"，ALL IN ONE智能舱集成新风/温控/喂养/清污/监控</span></div>
-      <div class="news-item"><span class="news-date">2025-11</span><span class="news-tag tag-new">新</span><span class="news-title"><strong>InnoYolo智阖</strong>联合京东方精电推出全智能爬宠饲养缸，OLED屏+AI语音+毫米波雷达情绪感知</span></div>
-      <div class="news-item"><span class="news-date">2025-11</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>REPTIZOO瑞皮</strong>亮相CIPS 2025，推出"亿田云"APP+智能WiFi产品线</span></div>
-      <div class="news-item"><span class="news-date">2025-08</span><span class="news-tag tag-trend">趋势</span><span class="news-title">亚宠展智能宠物舱霸屏活体区，<strong>宠尔顿/FEINX/萌宠千禧/GIXONE/Aoo</strong>等品牌异军突起</span></div>
-      <div class="news-item"><span class="news-date">2025-05</span><span class="news-tag tag-new">新</span><span class="news-title">Hackaday报道ESP32智能爬宠箱DIY项目，开源硬件降低进入门槛</span></div>
-      <div class="news-item"><span class="news-date">2025-01</span><span class="news-tag tag-fund">融资</span><span class="news-title"><strong>洁宠智能</strong>获1000万元天使轮融资，宠物智能科技赛道持续升温</span></div>
+      <div class="news-item"><span class="news-date">05-17</span><span class="news-tag tag-new">新</span><span class="news-title">全球智能爬宠箱控制器市场2025年规模<strong>$2.87亿</strong>，预计2034年达$5.63亿，CAGR 7.7%<a class="news-link" href="https://www.gonyn.com/industry/1881895.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">04-30</span><span class="news-tag tag-hot">热</span><span class="news-title"><strong>爬托邦</strong>创始人孟凡菁受访：国内唯一获融资爬宠品牌，20年养宠经验+科研团队攻克电路集成<a class="news-link" href="https://news.qq.com/rain/a/20260430A06AJC00" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">04-17</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>InnoYolo智阖</strong>规划未来1-2年推出"智盒·绿洲/蔚蓝/极光"系列，接入AIGC+VR生态<a class="news-link" href="https://post.smzdm.com/zz/p/aeo6n25z/" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">04-01</span><span class="news-tag tag-fund">融资</span><span class="news-title"><strong>爬托邦</strong>获数百万元天使轮融资——2026年爬宠赛道首笔对外披露融资<a class="news-link" href="https://www.petdata.cn/infodetail_7966935321133056.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">03-31</span><span class="news-tag tag-hot">热</span><span class="news-title">央视报道爬托邦融资，点亮爬宠行业资本化新曙光<a class="news-link" href="https://business.cctv.com/2026/03/31/ARTIj0UQbC4tJzffkiUtnpjb260331.shtml" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">03-09</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>宠尔顿PILTON</strong>发布Z系列超级旗舰款，整合SaaS管理+智能终端，开拓B端商用市场<a class="news-link" href="https://www.jiemian.com/article/14090488.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">02-xx</span><span class="news-tag tag-new">新</span><span class="news-title"><strong>爬托邦</strong>天猫首发单月售出200台，小红书种草+天猫转化策略初见成效<a class="news-link" href="https://news.qq.com/rain/a/20260430A06AJC00" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">01-26</span><span class="news-tag tag-trend">趋势</span><span class="news-title">宠尔顿开启"人宠居住新生态"，ALL IN ONE智能舱集成新风/温控/喂养/清污/监控<a class="news-link" href="https://news.pedaily.cn/20260126/122825.shtml" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">2025-11</span><span class="news-tag tag-new">新</span><span class="news-title"><strong>InnoYolo智阖</strong>联合京东方精电推出全智能爬宠饲养缸，OLED屏+AI语音+毫米波雷达情绪感知<a class="news-link" href="https://post.smzdm.com/zz/p/aeo6n25z/" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">2025-11</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>REPTIZOO瑞皮</strong>亮相CIPS 2025，推出"亿田云"APP+智能WiFi产品线<a class="news-link" href="http://www.newsmorning.cn/article/818.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">2025-08</span><span class="news-tag tag-trend">趋势</span><span class="news-title">亚宠展智能宠物舱霸屏活体区，<strong>宠尔顿/FEINX/萌宠千禧/GIXONE/Aoo</strong>等品牌异军突起<a class="news-link" href="https://www.sohu.com/a/929429527_121695480" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">2025-05</span><span class="news-tag tag-new">新</span><span class="news-title">Hackaday报道ESP32智能爬宠箱DIY项目，开源硬件降低进入门槛<a class="news-link" href="https://www.hackster.io/rau7han/iot-based-esp32-smart-terrarium-19ed25" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+      <div class="news-item"><span class="news-date">2025-01</span><span class="news-tag tag-fund">融资</span><span class="news-title"><strong>洁宠智能</strong>获1000万元天使轮融资，宠物智能科技赛道持续升温<a class="news-link" href="https://www.sohu.com/a/936964962_99982343" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
     </div>
   </div>
 
