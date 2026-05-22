@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>智能爬宠箱竞品观察大屏 | VIVOX Competitive Intelligence</title>
+<title>智能爬宠箱竞品观察大屏 v2.1 | VIVOX Competitive Intelligence</title>
 <style>
 :root {
   --bg-primary: #0b1120;
@@ -53,10 +53,8 @@ body {
 .header::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -10%;
-  width: 120%;
-  height: 200%;
+  top: -50%; left: -10%;
+  width: 120%; height: 200%;
   background: radial-gradient(ellipse at 30% 50%, rgba(59,130,246,0.08) 0%, transparent 60%),
               radial-gradient(ellipse at 70% 50%, rgba(139,92,246,0.06) 0%, transparent 60%);
   pointer-events: none;
@@ -67,6 +65,13 @@ body {
   padding: 0 32px;
   position: relative;
   z-index: 1;
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 .header h1 {
   font-size: 28px;
@@ -97,6 +102,62 @@ body {
 }
 .stat-pill .num { color: var(--accent); font-weight: 600; }
 
+/* Print button */
+.btn-print {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  background: rgba(59,130,246,0.15);
+  border: 1px solid rgba(59,130,246,0.35);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.btn-print:hover { background: rgba(59,130,246,0.28); border-color: var(--accent); }
+
+/* ===== SUMMARY CARDS (新增: 关键数字摘要) ===== */
+.summary-strip {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 32px 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+.sum-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+.sum-card:hover { border-color: var(--border-hover); }
+.sum-card .sum-num {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.sum-card .sum-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.sum-card.c-red .sum-num { color: var(--red); }
+.sum-card.c-orange .sum-num { color: var(--orange); }
+.sum-card.c-green .sum-num { color: var(--green); }
+.sum-card.c-blue .sum-num { color: var(--accent); }
+.sum-card.c-purple .sum-num { color: var(--purple); }
+.sum-card.c-cyan .sum-num { color: var(--cyan); }
+
 /* ===== SEARCH & FILTER ===== */
 .toolbar {
   max-width: 1400px;
@@ -122,11 +183,17 @@ body {
 .search-box input:focus { border-color: var(--border-hover); box-shadow: 0 0 0 3px var(--accent-glow); }
 .search-box .search-icon {
   position: absolute;
-  left: 16px;
-  top: 50%;
+  left: 16px; top: 50%;
   transform: translateY(-50%);
   font-size: 18px;
   color: var(--text-muted);
+}
+.search-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: -10px;
+  margin-bottom: 14px;
+  padding-left: 4px;
 }
 .filter-tags {
   display: flex;
@@ -256,6 +323,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: wrap;
 }
 .comp-card .brand-name .badge {
   font-size: 11px;
@@ -265,10 +333,26 @@ body {
 }
 .badge-threat { background: var(--red-bg); color: var(--red); }
 .badge-watch { background: var(--orange-bg); color: var(--orange); }
-.badge-traditional { background: var(--text-muted); color: var(--bg-primary); }
+.badge-traditional { background: rgba(100,116,139,0.2); color: var(--text-muted); }
 .badge-ecosystem { background: var(--purple-bg); color: var(--purple); }
 .badge-pet { background: var(--cyan-bg); color: var(--cyan); }
 .badge-new { background: var(--orange-bg); color: var(--orange); font-size:10px; padding:1px 6px; }
+
+/* 威胁趋势箭头 (新增) */
+.threat-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.trend-up { background: rgba(239,68,68,0.12); color: var(--red); }
+.trend-flat { background: rgba(100,116,139,0.12); color: var(--text-muted); }
+.trend-down { background: rgba(16,185,129,0.12); color: var(--green); }
 
 .comp-card .origin {
   font-size: 12px;
@@ -325,10 +409,8 @@ body {
 .swot-list li::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 10px;
-  width: 6px;
-  height: 6px;
+  left: 0; top: 10px;
+  width: 6px; height: 6px;
   border-radius: 50%;
 }
 .strengths li::before { background: var(--green); }
@@ -356,6 +438,33 @@ body {
   border: 1px solid var(--border);
 }
 
+/* 官网链接按钮 (新增) */
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.card-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+.card-link-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+.card-link-btn.primary { border-color: rgba(59,130,246,0.3); color: var(--accent); background: var(--accent-glow); }
+.card-link-btn.primary:hover { background: rgba(59,130,246,0.25); }
+
 /* ===== COMPARISON TABLE ===== */
 .table-wrapper {
   overflow-x: auto;
@@ -366,7 +475,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
-  min-width: 900px;
+  min-width: 960px;
 }
 thead th {
   background: var(--bg-input);
@@ -389,28 +498,65 @@ tbody tr:nth-child(even) { background: rgba(255,255,255,0.01); }
 tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
 .td-brand { font-weight: 600; color: var(--text-primary); white-space: nowrap; }
 .td-score { font-weight: 700; }
-.score-high { color: var(--green); }
+.score-high { color: var(--red); }
 .score-mid { color: var(--orange); }
-.score-low { color: var(--red); }
+.score-low { color: var(--green); }
 .check { color: var(--green); font-weight: 700; }
 .cross { color: var(--red); }
 .partial { color: var(--orange); }
 
+/* VIVOX领先度列 (新增) */
+.td-vivox-lead { font-weight: 700; text-align: center; }
+.lead-ahead { color: var(--green); }
+.lead-par { color: var(--orange); }
+.lead-behind { color: var(--red); }
+
 /* ===== NEWS TIMELINE ===== */
-.news-list { max-height: 400px; overflow-y: auto; }
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.news-header h2 { margin-bottom: 0; }
+.news-filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.news-filter-tag {
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  user-select: none;
+}
+.news-filter-tag:hover { border-color: var(--border-hover); color: var(--text-primary); }
+.news-filter-tag.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.news-list { max-height: 480px; overflow-y: auto; }
 .news-item {
   display: flex;
   gap: 12px;
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
   font-size: 13px;
+  transition: background 0.15s;
 }
 .news-item:last-child { border-bottom: none; }
+.news-item.hidden { display: none; }
+.news-item.search-hidden { display: none; }
 .news-date {
   color: var(--text-muted);
   white-space: nowrap;
   font-size: 12px;
-  min-width: 50px;
+  min-width: 55px;
 }
 .news-tag {
   font-size: 11px;
@@ -418,12 +564,13 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
   border-radius: 8px;
   font-weight: 500;
   white-space: nowrap;
+  height: fit-content;
 }
 .tag-hot { background: var(--red-bg); color: var(--red); }
 .tag-new { background: var(--green-bg); color: var(--green); }
 .tag-trend { background: var(--cyan-bg); color: var(--cyan); }
 .tag-fund { background: var(--purple-bg); color: var(--purple); }
-.news-title { color: var(--text-secondary); line-height: 1.5; }
+.news-title { color: var(--text-secondary); line-height: 1.5; flex: 1; }
 .news-title strong { color: var(--text-primary); }
 .news-link {
   display: inline-flex;
@@ -439,14 +586,20 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
   white-space: nowrap;
 }
 .news-link:hover { opacity: 1; color: #60a5fa; text-decoration: underline; }
-.news-link .link-icon { font-size: 10px; }
 
 /* ===== MATRIX ===== */
+.matrix-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 900px) { .matrix-layout { grid-template-columns: 1fr; } }
+
 .matrix-container {
   position: relative;
   width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
+  max-width: 640px;
   aspect-ratio: 1;
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -465,15 +618,15 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text-muted);
-  opacity: 0.4;
+  opacity: 0.45;
 }
 .matrix-dot {
   position: absolute;
   border-radius: 50%;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -483,6 +636,7 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
   z-index: 2;
 }
 .matrix-dot:hover { transform: scale(1.3); z-index: 10; }
+.matrix-dot.active-legend { transform: scale(1.3); z-index: 10; box-shadow: 0 0 0 3px rgba(255,255,255,0.3); }
 .matrix-dot .tooltip {
   display: none;
   position: absolute;
@@ -499,6 +653,7 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
   font-weight: 400;
   z-index: 20;
   box-shadow: var(--shadow);
+  pointer-events: none;
 }
 .matrix-dot:hover .tooltip { display: block; }
 .matrix-divider-x, .matrix-divider-y {
@@ -507,6 +662,46 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
 }
 .matrix-divider-x { width: 100%; height: 1px; top: 50%; }
 .matrix-divider-y { height: 100%; width: 1px; left: 50%; }
+
+/* 矩阵图例 (新增) */
+.matrix-legend {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.matrix-legend h4 {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-bottom: 2px;
+}
+.legend-item:hover, .legend-item.active { background: var(--bg-card-hover); }
+.legend-dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.legend-info { flex: 1; min-width: 0; }
+.legend-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.legend-pos { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.legend-divider { height: 1px; background: var(--border); margin: 8px 0; }
 
 /* ===== STRATEGY ===== */
 .strategy-grid {
@@ -529,15 +724,29 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
   opacity: 0.3;
   margin-bottom: 4px;
 }
-.strategy-card h4 {
-  font-size: 15px;
-  margin-bottom: 6px;
-}
+.strategy-card h4 { font-size: 15px; margin-bottom: 6px; }
 .strategy-card p {
   font-size: 13px;
   color: var(--text-secondary);
   line-height: 1.7;
 }
+/* 战略建议 — 时间/责任方 (新增) */
+.strategy-meta {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.strategy-meta-tag {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  background: var(--bg-input);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+.strategy-meta-tag.deadline { color: var(--orange); border-color: rgba(245,158,11,0.3); background: var(--orange-bg); }
+.strategy-meta-tag.owner { color: var(--cyan); border-color: rgba(6,182,212,0.25); background: var(--cyan-bg); }
 
 /* ===== FOOTER ===== */
 .footer {
@@ -548,6 +757,8 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
   border-top: 1px solid var(--border);
   margin-top: 32px;
 }
+.footer a { color: var(--accent); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
 
 /* ===== ANIMATIONS ===== */
 @keyframes fadeInUp {
@@ -562,8 +773,26 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
 ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
 
-/* ===== HIGHLIGHT SEARCH ===== */
+/* ===== SEARCH HIGHLIGHT ===== */
 .highlight-match { background: rgba(245,158,11,0.3); border-radius: 2px; padding: 0 1px; }
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  body { background: #fff; color: #111; }
+  .header { background: #f1f5f9 !important; color: #111; break-inside: avoid; }
+  .header h1, .header .subtitle, .stat-pill .num { color: #111 !important; }
+  .section-nav, .toolbar, .btn-print { display: none !important; }
+  .comp-card, .insight-item, .strategy-card {
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    color: #111 !important;
+    break-inside: avoid;
+  }
+  .matrix-container { break-inside: avoid; }
+  .news-list { max-height: none !important; overflow: visible !important; }
+  table { font-size: 11px; }
+  .footer { color: #666; }
+}
 </style>
 </head>
 <body>
@@ -571,18 +800,49 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
 <!-- HEADER -->
 <div class="header">
   <div class="header-inner">
-    <h1><span class="icon">🦎</span> 智能爬宠箱竞品观察大屏</h1>
+    <div class="header-top">
+      <h1><span class="icon">🦎</span> 智能爬宠箱竞品观察大屏 <span style="font-size:14px;font-weight:400;color:var(--text-muted);margin-left:6px;">v2.1</span></h1>
+      <button class="btn-print" onclick="window.print()">🖨️ 打印 / 导出PDF</button>
+    </div>
     <div class="subtitle">
-      <span class="stat-pill">📅 更新日期：<span class="num">2026-05-17</span></span>
+      <span class="stat-pill">📅 更新：<span class="num">2026-05-22</span></span>
       <span class="sep">·</span>
-      <span class="stat-pill">📊 竞品数量：<span class="num">13</span>款</span>
+      <span class="stat-pill">📊 竞品：<span class="num">14</span>款</span>
       <span class="sep">·</span>
-      <span class="stat-pill">🎯 分析维度：<span class="num">8</span></span>
+      <span class="stat-pill">🎯 分析维度：<span class="num">9</span></span>
       <span class="sep">·</span>
       <span class="stat-pill">🌍 覆盖市场：<span class="num">中国/全球</span></span>
       <span class="sep">·</span>
-      <span class="stat-pill">💰 市场规模：<span class="num">$2.87亿(2025)→$5.63亿(2034)</span></span>
+      <span class="stat-pill">💰 市场规模：<span class="num">$2.87亿→$5.63亿(2034)</span></span>
     </div>
+  </div>
+</div>
+
+<!-- ① 关键数字摘要卡 (新增) -->
+<div class="summary-strip">
+  <div class="sum-card c-red">
+    <div class="sum-num">3</div>
+    <div class="sum-label">直接竞品<br>(爬宠+智能)</div>
+  </div>
+  <div class="sum-card c-orange">
+    <div class="sum-num">4</div>
+    <div class="sum-label">已获融资品牌<br>(爬托邦/宠尔顿/洁宠/灵尾)</div>
+  </div>
+  <div class="sum-card c-purple">
+    <div class="sum-num">2</div>
+    <div class="sum-label">具备AI能力<br>(InnoYolo/灵尾)</div>
+  </div>
+  <div class="sum-card c-cyan">
+    <div class="sum-num">5</div>
+    <div class="sum-label">无智能化<br>传统品牌(转化池)</div>
+  </div>
+  <div class="sum-card c-green">
+    <div class="sum-num">0</div>
+    <div class="sum-label">具备物种数据库<br>(VIVOX独占机会)</div>
+  </div>
+  <div class="sum-card c-blue">
+    <div class="sum-num">7.7%</div>
+    <div class="sum-label">市场CAGR<br>2025→2034</div>
   </div>
 </div>
 
@@ -590,8 +850,9 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
 <div class="toolbar">
   <div class="search-box">
     <span class="search-icon">🔍</span>
-    <input type="text" id="searchInput" placeholder="输入关键词快速定位竞品（品牌、功能、AI、价格…）" oninput="filterCards()">
+    <input type="text" id="searchInput" placeholder="全局搜索：品牌、功能、AI、价格、新闻… (同时过滤竞品卡片和新闻动态)" oninput="globalSearch()">
   </div>
+  <div class="search-hint">💡 搜索关键词会同时高亮竞品卡片和新闻条目</div>
   <div class="filter-tags" id="filterTags">
     <span class="filter-tag active" data-filter="all" onclick="setFilter(this)">全部</span>
     <span class="filter-tag" data-filter="direct" onclick="setFilter(this)">🎯 直接竞品</span>
@@ -610,7 +871,7 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
   <a href="#cards">📋 竞品卡片</a>
   <a href="#compare">📊 对比表格</a>
   <a href="#matrix">📍 定位矩阵</a>
-  <a href="#strategy">💡 战略建议</a>
+  <a href="#strategy">🚀 战略建议</a>
 </div>
 
 <div class="main">
@@ -626,41 +887,61 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
         <div class="insight-item"><div class="title">3D造景配件是"剃须刀刀片"</div><div class="desc">配件毛利率65%+复购属性，与爬托邦"蘑菇怪"造景系同一逻辑但更深度</div><div class="source">📌 来源：用户研究 + 竞品分析</div></div>
         <div class="insight-item"><div class="title">AI视觉健康守卫是核心差异化</div><div class="desc">双摄+红外蜕皮/健康预警，当前仅VIVOX规划此功能，竞争空白区</div><div class="source">📌 来源：行业评测 + VIVOX技术路线</div></div>
         <div class="insight-item"><div class="title">社区 App 构建 UGC 护城河</div><div class="desc">爬托邦已有社区雏形，VIVOX需快速跟进并通过物种数据形成内容壁垒</div><div class="source">📌 来源：爬托邦产品分析</div></div>
+        <div class="insight-item"><div class="title">"AI视觉+物种库"是灵尾无法复制的组合壁垒</div><div class="desc">灵尾有AI通用能力但无爬宠物种深度，VIVOX的AI视觉健康守卫+200物种数据库+三区温控三位一体组合是1-2年不可复制壁垒</div><div class="source">📌 来源：灵尾科技产品分析 + VIVOX技术路线</div></div>
       </div>
       <div class="insight-col insight-dont">
         <h3>❌ 不建议做</h3>
         <div class="insight-item"><div class="title">不要与爬托邦比拼"一根线"集成</div><div class="desc">电路集成是爬托邦创始团队核心壁垒（20年经验+科研攻关），硬碰硬无优势</div><div class="source">📌 来源：爬托邦深度分析</div></div>
-        <div class="insight-item"><div class="title">不要做"情感陪伴"型宠物缸</div><div class="desc">InnoYolo已占据"情绪价值+家居美学"定位，与其差异化而非同质化</div><div class="source">📌 来源：InnoYolo产品分析</div></div>
+        <div class="insight-item"><div class="title">不要做"情感陪伴"型宠物缸</div><div class="desc">InnoYolo已占据"情绪价值+家居美学"定位，且正谋划Indiegogo出海，与其差异化</div><div class="source">📌 来源：InnoYolo产品分析 + 2026-04抖音</div></div>
         <div class="insight-item"><div class="title">不要依赖纯硬件利润</div><div class="desc">渠道调整后硬件毛利率仅21%，利润引擎必须转向配件(65%)+订阅(98%)</div><div class="source">📌 来源：VIVOX财务模型</div></div>
         <div class="insight-item"><div class="title">不要忽视B端渠道</div><div class="desc">爬托邦已建立B端分销网络，VIVOX需同时布局经销商+繁殖场+宠物店</div><div class="source">📌 来源：爬托邦渠道分析</div></div>
         <div class="insight-item"><div class="title">不要把Cozy当利润品</div><div class="desc">Cozy毛利率仅4.2%，定位引流品+生态入口，靠配件和订阅变现</div><div class="source">📌 来源：VIVOX财务模型</div></div>
+        <div class="insight-item"><div class="title">不要低估灵尾科技的出海速度</div><div class="desc">灵尾2026年连战4场全球大展(含Interzoo)，千万元海外订单已签——VIVOX必须在物种数据库+三区温控上形成不可替代性，而非与灵尾拼"AI+出海"的通用能力</div><div class="source">📌 来源：灵尾科技Interzoo 2026报道</div></div>
       </div>
     </div>
   </div>
 
   <!-- ===== NEWS TIMELINE ===== -->
   <div class="section" id="news">
-    <h2 class="section-title">📰 最新动态 <span class="count">— 2026年行业要闻追踪</span></h2>
-    <div class="news-list">
-      <div class="news-item"><span class="news-date">05-17</span><span class="news-tag tag-new">新</span><span class="news-title">全球智能爬宠箱控制器市场2025年规模<strong>$2.87亿</strong>，预计2034年达$5.63亿，CAGR 7.7%<a class="news-link" href="https://www.gonyn.com/industry/1881895.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">04-30</span><span class="news-tag tag-hot">热</span><span class="news-title"><strong>爬托邦</strong>创始人孟凡菁受访：国内唯一获融资爬宠品牌，20年养宠经验+科研团队攻克电路集成<a class="news-link" href="https://news.qq.com/rain/a/20260430A06AJC00" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">04-17</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>InnoYolo智阖</strong>规划未来1-2年推出"智盒·绿洲/蔚蓝/极光"系列，接入AIGC+VR生态<a class="news-link" href="https://post.smzdm.com/zz/p/aeo6n25z/" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">04-01</span><span class="news-tag tag-fund">融资</span><span class="news-title"><strong>爬托邦</strong>获数百万元天使轮融资——2026年爬宠赛道首笔对外披露融资<a class="news-link" href="https://www.petdata.cn/infodetail_7966935321133056.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">03-31</span><span class="news-tag tag-hot">热</span><span class="news-title">央视报道爬托邦融资，点亮爬宠行业资本化新曙光<a class="news-link" href="https://business.cctv.com/2026/03/31/ARTIj0UQbC4tJzffkiUtnpjb260331.shtml" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">03-09</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>宠尔顿PILTON</strong>发布Z系列超级旗舰款，整合SaaS管理+智能终端，开拓B端商用市场<a class="news-link" href="https://www.jiemian.com/article/14090488.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">02-xx</span><span class="news-tag tag-new">新</span><span class="news-title"><strong>爬托邦</strong>天猫首发单月售出200台，小红书种草+天猫转化策略初见成效<a class="news-link" href="https://news.qq.com/rain/a/20260430A06AJC00" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">01-26</span><span class="news-tag tag-trend">趋势</span><span class="news-title">宠尔顿开启"人宠居住新生态"，ALL IN ONE智能舱集成新风/温控/喂养/清污/监控<a class="news-link" href="https://news.pedaily.cn/20260126/122825.shtml" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">2025-11</span><span class="news-tag tag-new">新</span><span class="news-title"><strong>InnoYolo智阖</strong>联合京东方精电推出全智能爬宠饲养缸，OLED屏+AI语音+毫米波雷达情绪感知<a class="news-link" href="https://post.smzdm.com/zz/p/aeo6n25z/" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">2025-11</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>REPTIZOO瑞皮</strong>亮相CIPS 2025，推出"亿田云"APP+智能WiFi产品线<a class="news-link" href="http://www.newsmorning.cn/article/818.html" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">2025-08</span><span class="news-tag tag-trend">趋势</span><span class="news-title">亚宠展智能宠物舱霸屏活体区，<strong>宠尔顿/FEINX/萌宠千禧/GIXONE/Aoo</strong>等品牌异军突起<a class="news-link" href="https://www.sohu.com/a/929429527_121695480" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">2025-05</span><span class="news-tag tag-new">新</span><span class="news-title">Hackaday报道ESP32智能爬宠箱DIY项目，开源硬件降低进入门槛<a class="news-link" href="https://www.hackster.io/rau7han/iot-based-esp32-smart-terrarium-19ed25" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
-      <div class="news-item"><span class="news-date">2025-01</span><span class="news-tag tag-fund">融资</span><span class="news-title"><strong>洁宠智能</strong>获1000万元天使轮融资，宠物智能科技赛道持续升温<a class="news-link" href="https://www.sohu.com/a/936964962_99982343" target="_blank" rel="noopener noreferrer"><span class="link-icon">🔗</span>来源</a></span></div>
+    <div class="news-header">
+      <h2 class="section-title" style="margin-bottom:0;">📰 最新动态 <span class="count">— 2026年行业要闻追踪</span></h2>
+      <!-- ② 新闻品牌过滤标签 (新增) -->
+      <div class="news-filter-tags">
+        <span class="news-filter-tag active" data-brand="all" onclick="setNewsFilter(this)">全部</span>
+        <span class="news-filter-tag" data-brand="爬托邦" onclick="setNewsFilter(this)">爬托邦</span>
+        <span class="news-filter-tag" data-brand="InnoYolo" onclick="setNewsFilter(this)">InnoYolo</span>
+        <span class="news-filter-tag" data-brand="REPTIZOO" onclick="setNewsFilter(this)">REPTIZOO</span>
+        <span class="news-filter-tag" data-brand="宠尔顿" onclick="setNewsFilter(this)">宠尔顿</span>
+        <span class="news-filter-tag" data-brand="市场" onclick="setNewsFilter(this)">市场数据</span>
+        <span class="news-filter-tag" data-brand="灵尾科技" onclick="setNewsFilter(this)">灵尾科技</span>
+      </div>
+    </div>
+    <div class="news-list" id="newsList">
+      <div class="news-item" data-brand="灵尾科技"><span class="news-date">05-17</span><span class="news-tag tag-hot">热</span><span class="news-title"><strong>灵尾科技</strong>全球首创AI智能爬宠伴侣亮相德国Interzoo 2026，现场签下超千万元意向订单，填补欧洲高端智能爬宠箱市场空白<a class="news-link" href="https://news.hexun.com/2026-05-17/224167355.html" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="灵尾科技"><span class="news-date">05-12</span><span class="news-tag tag-new">新</span><span class="news-title"><strong>灵尾科技</strong>参加2026德国Interzoo展，AI智能爬宠伴侣模拟自然光照+温湿度精准调控+宠物看护，获欧洲德/英/法代理商高度评价<a class="news-link" href="https://news.qq.com/rain/a/20260516A04NN300" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="市场"><span class="news-date">01-05</span><span class="news-tag tag-new">新</span><span class="news-title">《2026年中国宠物行业白皮书》发布：城镇犬猫消费市场<strong>3126亿元</strong>(+4.1%)，爬行类饲养占比<strong>13.5%</strong>(+2.4个百分点)，增速在异宠中排名第二<a class="news-link" href="https://business.cctv.com/2026/01/05/ARTIdmv2AWmVeRVodaZYLOvQ260105.shtml" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="REPTIZOO"><span class="news-date">2025-05</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>REPTIZOO瑞皮</strong>推出智能WiFi产品线+"亿田云"APP，硬件迭代与软件生态深度融合，实现远程温控+场景模式+社交互动+知识服务<a class="news-link" href="https://finance.sina.com.cn/roll/2025-05-08/doc-inevvwyt2518217.shtml" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="InnoYolo"><span class="news-date">04-15</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>InnoYolo智阖</strong>创始人王晨受访：未来1-2年推出"智盒·绿洲/蔚蓝/极光"系列+VR游戏，定位从产品升级为"空间解决方案+情绪价值平台"<a class="news-link" href="https://www.sohu.com/a/1010708982_120986262" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="宠尔顿"><span class="news-date">03-09</span><span class="news-tag tag-new">新</span><span class="news-title"><strong>宠尔顿PILTON</strong>迭代至3.0版本：±1℃精准恒温+新风循环净化+AI摄像头+UV灭菌+智慧大屏，与海底捞/亚朵酒店深度合作<a class="news-link" href="https://www.sohu.com/a/994326506_120124744" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="市场"><span class="news-date">05-21</span><span class="news-tag tag-new">新</span><span class="news-title">全球爬宠饲养箱市场规模预计从2025年<strong>$15亿</strong>增至2032年<strong>$25.4亿</strong>，CAGR 7.8%<a class="news-link" href="https://www.gonyn.com/industry/1881895.html" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="InnoYolo"><span class="news-date">04-11</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>InnoYolo智阖</strong> × Indiegogo宣布出海众筹计划，中国智能宠物缸首次谋划全球市场<a class="news-link" href="https://www.douyin.com/video/7627337429837483300" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="爬托邦"><span class="news-date">04-30</span><span class="news-tag tag-hot">热</span><span class="news-title"><strong>爬托邦</strong>创始人孟凡菁受访：国内唯一获融资爬宠品牌，20年养宠经验+科研团队攻克电路集成<a class="news-link" href="https://news.qq.com/rain/a/20260430A06AJC00" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="爬托邦"><span class="news-date">04-01</span><span class="news-tag tag-fund">融资</span><span class="news-title"><strong>爬托邦</strong>获数百万元天使轮融资——2026年爬宠赛道首笔对外披露融资，资金用于研发+供应链+B端渠道+行业标准建设<a class="news-link" href="https://www.petdata.cn/infodetail_7966935321133056.html" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="爬托邦"><span class="news-date">03-31</span><span class="news-tag tag-hot">热</span><span class="news-title">央视报道<strong>爬托邦</strong>融资，点亮爬宠行业资本化新曙光<a class="news-link" href="https://business.cctv.com/2026/03/31/ARTIj0UQbC4tJzffkiUtnpjb260331.shtml" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="爬托邦"><span class="news-date">02-xx</span><span class="news-tag tag-new">新</span><span class="news-title"><strong>爬托邦</strong>天猫首发单月售出200台，小红书种草+天猫转化策略初见成效<a class="news-link" href="https://news.qq.com/rain/a/20260430A06AJC00" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="宠尔顿"><span class="news-date">01-26</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>宠尔顿</strong>开启"人宠居住新生态"，ALL IN ONE智能舱集成新风/温控/喂养/清污/监控<a class="news-link" href="https://news.pedaily.cn/20260126/122825.shtml" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="REPTIZOO"><span class="news-date">01-09</span><span class="news-tag tag-new">新</span><span class="news-title"><strong>REPTIZOO瑞皮</strong>出席2026宠物数据大会，发布最新智能饲养设备，专业化/智能化成行业明确趋势<a class="news-link" href="https://www.163.com/dy/article/KIR067BB0556J14I.html" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="InnoYolo"><span class="news-date">2025-11</span><span class="news-tag tag-new">新</span><span class="news-title"><strong>InnoYolo智阖</strong>联合京东方精电推出全智能爬宠饲养缸，OLED屏+AI语音+毫米波雷达情绪感知<a class="news-link" href="https://post.smzdm.com/zz/p/aeo6n25z/" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="REPTIZOO"><span class="news-date">2025-11</span><span class="news-tag tag-trend">趋势</span><span class="news-title"><strong>REPTIZOO瑞皮</strong>亮相CIPS 2025，展示亿田云APP+智能WiFi产品线<a class="news-link" href="http://www.newsmorning.cn/article/818.html" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="市场"><span class="news-date">2025-08</span><span class="news-tag tag-trend">趋势</span><span class="news-title">亚宠展智能宠物舱霸屏活体区，<strong>宠尔顿/FEINX/萌宠千禧/GIXONE/Aoo</strong>等品牌异军突起<a class="news-link" href="https://www.sohu.com/a/929429527_121695480" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="市场"><span class="news-date">2025-05</span><span class="news-tag tag-new">新</span><span class="news-title">Hackster.io报道ESP32智能爬宠箱DIY项目，开源硬件验证技术可行性<a class="news-link" href="https://www.hackster.io/rau7han/iot-based-esp32-smart-terrarium-19ed25" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
+      <div class="news-item" data-brand="市场"><span class="news-date">2025-01</span><span class="news-tag tag-fund">融资</span><span class="news-title"><strong>洁宠智能</strong>获1000万元天使轮融资，宠物智能科技赛道持续升温<a class="news-link" href="https://www.sohu.com/a/936964962_99982343" target="_blank" rel="noopener noreferrer">🔗来源</a></span></div>
     </div>
   </div>
 
   <!-- ===== COMPETITOR CARDS ===== -->
   <div class="section" id="cards">
-    <h2 class="section-title">📋 竞品深度解析 <span class="count">— 13款竞品卡片</span></h2>
+    <h2 class="section-title">📋 竞品深度解析 <span class="count">— 14款竞品卡片</span></h2>
     <div class="card-grid" id="cardGrid">
 
       <!-- CARD 1: 爬托邦 -->
@@ -668,8 +949,9 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
         <div class="card-header">
           <div>
             <div class="brand-name">爬托邦 <span class="badge badge-threat">⚠ 最大直接威胁</span></div>
-            <div class="origin">🇨🇳 中国 · 2026年获数百万元天使轮 · 创始人孟凡菁</div>
+            <div class="origin">🇨🇳 中国 · 2026年获数百万元天使轮(赛道首笔) · 创始人孟凡菁 · 资金用于研发+供应链+B端渠道+行业标准建设</div>
           </div>
+          <span class="threat-trend trend-up">↑ 威胁上升</span>
         </div>
         <div class="positioning">"一根线"模块化智能爬宠箱 — 用标准化数据替代个人经验，降低新手饲养门槛</div>
         <div class="metric-row">
@@ -685,6 +967,7 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <li>内置加热结构解决传统加热垫传导效率低问题</li>
             <li>B端分销网络已建立，复购率稳定</li>
             <li>蘑菇怪造景系列开辟配件复购路径</li>
+            <li>融资后明确行业标准建设方向，争夺规则话语权</li>
           </ul>
           <h4 style="color:var(--red)">✗ 不足</h4>
           <ul class="swot-list weaknesses">
@@ -692,22 +975,27 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <li>物种参数依赖预设，无自适应引擎</li>
             <li>仅聚焦守宫/角蛙等小体型，缺少大型爬宠产品</li>
             <li>融资额较小（数百万），烧不起价格战</li>
-            <li>从C端转向B端，品牌声量有限</li>
           </ul>
         </div>
-        <div class="risk-note">⚠️ 爬托邦电路集成是20年经验+科研攻关的成果，VIVOX不应正面对抗，而应在AI+物种数据库维度建立差异化</div>
+        <div class="risk-note">⚠️ 融资后加速研发，威胁持续上升。VIVOX需在AI+物种数据库维度建立差异化，而非正面对抗</div>
         <div class="tags"><span class="tag">模块化集成</span><span class="tag">分区温控</span><span class="tag">内置加热</span><span class="tag">自动喷淋</span><span class="tag">B端优先</span><span class="tag">造景生态</span></div>
+        <div class="card-links">
+          <a class="card-link-btn primary" href="https://online.petfairasia.com/zh-cn/showroom-2025/institutions/a2cchd4" target="_blank" rel="noopener noreferrer">🌐 亚宠展主页</a>
+          <a class="card-link-btn" href="https://news.qq.com/rain/a/20260430A06AJC00" target="_blank" rel="noopener noreferrer">📰 创始人专访</a>
+          <a class="card-link-btn" href="https://www.petdata.cn/infodetail_7966935321133056.html" target="_blank" rel="noopener noreferrer">💰 融资报道</a>
+        </div>
       </div>
 
       <!-- CARD 2: InnoYolo 智阖 -->
-      <div class="comp-card" data-category="direct" data-keywords="InnoYolo 智阖 京东方 情绪价值 OLED 毫米波雷达 AIGC 家居美学 VR">
+      <div class="comp-card" data-category="direct" data-keywords="InnoYolo 智阖 京东方 情绪价值 OLED 毫米波雷达 AIGC 家居美学 VR Indiegogo 出海">
         <div class="card-header">
           <div>
             <div class="brand-name">InnoYolo 智阖 <span class="badge badge-watch">👀 重点关注</span></div>
-            <div class="origin">🇨🇳 中国 · 合作京东方精电 · 智盒·绿洲/蔚蓝/极光规划中</div>
+            <div class="origin">🇨🇳 中国 · 合作京东方精电 · 规划Indiegogo出海众筹 · 创始人王晨提出"智盒"系列</div>
           </div>
+          <span class="threat-trend trend-up">↑ 威胁上升</span>
         </div>
-        <div class="positioning">"景与境"智能家居生态缸 — 情绪价值+家居美学+AIGC交互</div>
+        <div class="positioning">"景与境"智能家居生态缸 — 情绪价值+家居美学+AIGC交互，从产品升级为"空间解决方案+情绪价值平台"</div>
         <div class="metric-row">
           <div class="metric-item"><div class="label">参考价格</div><div class="value">¥2,000-4,000(估)</div></div>
           <div class="metric-item"><div class="label">目标用户</div><div class="value">都市解压/家居</div></div>
@@ -720,19 +1008,25 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <li>毫米波雷达监测人体心跳呼吸→AI调节白噪音</li>
             <li>AIGC智能伴侣+语音交互，未来具象对话</li>
             <li>家居友好设计，弱化缸体边界</li>
-            <li>VR游戏规划（微软合作），生态想象空间大</li>
+            <li>率先谋划Indiegogo出海，全球视野</li>
+            <li>规划"智盒·绿洲/蔚蓝/极光"系列+VR游戏(与微软合作)</li>
+            <li>跨界合作：爬宠头部企业+景观设计+高端家居+潮玩手办+文旅景区</li>
           </ul>
           <h4 style="color:var(--red)">✗ 不足</h4>
           <ul class="swot-list weaknesses">
             <li>爬宠专属深度不足，更像"情绪终端"而非专业饲养设备</li>
             <li>物种参数/温控精度信息未披露</li>
-            <li>价格可能偏高，受众偏窄</li>
             <li>VR/AI功能尚在规划中，落地时间不确定</li>
             <li>12V安全电压限制了高功率设备</li>
           </ul>
         </div>
-        <div class="risk-note">⚠️ InnoYolo的"情绪价值"定位与VIVOX"专业饲养"错位竞争，但若其切入爬宠垂直，OLED+AI组合将是差异化威胁</div>
-        <div class="tags"><span class="tag">OLED大屏</span><span class="tag">毫米波雷达</span><span class="tag">AIGC伴侣</span><span class="tag">情绪感知</span><span class="tag">家居美学</span><span class="tag">VR规划</span></div>
+        <div class="risk-note">⚠️ InnoYolo出海计划意味着VIVOX未来出海将遇到更早期的竞争，需加速国际化布局</div>
+        <div class="tags"><span class="tag">OLED大屏</span><span class="tag">毫米波雷达</span><span class="tag">AIGC伴侣</span><span class="tag">情绪感知</span><span class="tag">家居美学</span><span class="tag">智盒系列</span><span class="tag">VR规划</span><span class="tag">出海</span></div>
+        <div class="card-links">
+          <a class="card-link-btn primary" href="https://www.innoyolo.cloud/" target="_blank" rel="noopener noreferrer">🌐 官方网站</a>
+          <a class="card-link-btn" href="https://innoyolo.top/" target="_blank" rel="noopener noreferrer">📱 APP控制端</a>
+          <a class="card-link-btn" href="https://post.smzdm.com/zz/p/aeo6n25z/" target="_blank" rel="noopener noreferrer">📰 深度评测</a>
+        </div>
       </div>
 
       <!-- CARD 3: 达芬奇黑洞 -->
@@ -742,8 +1036,9 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <div class="brand-name">达芬奇黑洞 ADVINCI <span class="badge badge-traditional">🏗️ 品牌龙头</span></div>
             <div class="origin">🇨🇳 中国 · 两爬行业十大优秀品牌 · 太阳Pro/太阳Air系列</div>
           </div>
+          <span class="threat-trend trend-flat">→ 威胁持平</span>
         </div>
-        <div class="positioning">传统爬宠箱品牌龙头 — 全规格覆盖，但无智能化能力</div>
+        <div class="positioning">传统爬宠箱品牌龙头 — 全规格覆盖，最大用户转化池</div>
         <div class="metric-row">
           <div class="metric-item"><div class="label">参考价格</div><div class="value">¥200-800</div></div>
           <div class="metric-item"><div class="label">目标用户</div><div class="value">全层级玩家</div></div>
@@ -767,6 +1062,9 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
         </div>
         <div class="risk-note">⚠️ 达芬奇黑洞是VIVOX最大的用户转化池——其现有用户升级智能设备是核心获客路径</div>
         <div class="tags"><span class="tag">品牌龙头</span><span class="tag">全规格</span><span class="tag">PC材质</span><span class="tag">无智能</span><span class="tag">最大转化池</span></div>
+        <div class="card-links">
+          <a class="card-link-btn" href="https://zhuanlan.zhihu.com/p/1941970764589950464" target="_blank" rel="noopener noreferrer">📰 行业评测对比</a>
+        </div>
       </div>
 
       <!-- CARD 4: Exo Terra -->
@@ -776,8 +1074,9 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <div class="brand-name">Exo Terra <span class="badge badge-traditional">🌍 全球龙头</span></div>
             <div class="origin">🇨🇦 加拿大 · Rolf C. Hagen旗下 · 全球爬宠用品领导品牌</div>
           </div>
+          <span class="threat-trend trend-flat">→ 持平(出海时)</span>
         </div>
-        <div class="positioning">全球爬宠用品龙头 — 产品线最全，但无智能化布局</div>
+        <div class="positioning">全球爬宠用品龙头 — 产品线最全，无智能化布局，最大出海机会空间</div>
         <div class="metric-row">
           <div class="metric-item"><div class="label">参考价格</div><div class="value">¥150-1,500</div></div>
           <div class="metric-item"><div class="label">目标用户</div><div class="value">全球爬宠爱好者</div></div>
@@ -799,17 +1098,21 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
         </div>
         <div class="risk-note">⚠️ Exo Terra是VIVOX出海最大竞争对手，也是全球智能爬宠箱最大的机会空间——其用户正在等待智能升级</div>
         <div class="tags"><span class="tag">全球龙头</span><span class="tag">全品类</span><span class="tag">兽医首选</span><span class="tag">无智能</span><span class="tag">出海对手</span></div>
+        <div class="card-links">
+          <a class="card-link-btn primary" href="https://www.exo-terra.com" target="_blank" rel="noopener noreferrer">🌐 官方网站</a>
+        </div>
       </div>
 
       <!-- CARD 5: REPTIZOO 瑞皮 -->
-      <div class="comp-card" data-category="indirect" data-keywords="REPTIZOO 瑞皮 亿田云 WiFi温控 智能灯罩 PID CIPS">
+      <div class="comp-card" data-category="indirect" data-keywords="REPTIZOO 瑞皮 亿田云 WiFi温控 智能灯罩 PID CIPS 宠物数据大会">
         <div class="card-header">
           <div>
             <div class="brand-name">REPTIZOO 瑞皮 <span class="badge badge-watch">👀 间接竞品</span></div>
-            <div class="origin">🇨🇳 中国 · 25000㎡生产基地 · "亿田云"APP · CIPS 2025亮相</div>
+            <div class="origin">🇨🇳 中国 · 25000㎡生产基地 · 2026年出席宠物数据大会推出智能设备</div>
           </div>
+          <span class="threat-trend trend-up">↑ 智能化提速</span>
         </div>
-        <div class="positioning">传统品牌智能化转型代表 — WiFi温控+智能灯罩，"配件智能"路线</div>
+        <div class="positioning">传统品牌智能化转型代表 — WiFi温控+智能灯罩，"配件智能"路线加速</div>
         <div class="metric-row">
           <div class="metric-item"><div class="label">参考价格</div><div class="value">¥100-500(配件)</div></div>
           <div class="metric-item"><div class="label">目标用户</div><div class="value">入门/中级玩家</div></div>
@@ -819,9 +1122,10 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
           <h4 style="color:var(--green)">✓ 优势</h4>
           <ul class="swot-list strengths">
             <li>25000㎡现代化生产基地，供应链成熟</li>
-            <li>"亿田云"APP实现WiFi远程温控+智能灯罩</li>
+            <li>"亿田云"APP实现WiFi远程温控+智能灯罩+场景模式+社交互动+饲养知识库</li>
             <li>PID精准调温技术，专业级温控</li>
-            <li>全球化布局，亮相CIPS国际宠物展</li>
+            <li>智能WiFi产品线覆盖加热垫/加湿器/加热灯等多类设备</li>
+            <li>2026年持续新品发布，智能化提速明显，设备协同逻辑优化(动态调节)</li>
           </ul>
           <h4 style="color:var(--red)">✗ 不足</h4>
           <ul class="swot-list weaknesses">
@@ -831,8 +1135,12 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <li>品牌形象偏"传统+升级"，缺科技感</li>
           </ul>
         </div>
-        <div class="risk-note">⚠️ REPTIZOO的"配件智能"路线可能成为VIVOX配件生态的低价替代品，需关注其是否会推出整机方案</div>
-        <div class="tags"><span class="tag">WiFi温控</span><span class="tag">PID调温</span><span class="tag">亿田云APP</span><span class="tag">智能灯罩</span><span class="tag">CIPS亮相</span></div>
+        <div class="risk-note">⚠️ REPTIZOO智能化在提速，若推出整机方案将成为VIVOX主要威胁，需密切跟踪</div>
+        <div class="tags"><span class="tag">WiFi温控</span><span class="tag">PID调温</span><span class="tag">亿田云APP</span><span class="tag">智能灯罩</span><span class="tag">智能化提速</span></div>
+        <div class="card-links">
+          <a class="card-link-btn primary" href="http://www.repti-zoo.com/en/index.php?lang=cn" target="_blank" rel="noopener noreferrer">🌐 官方网站</a>
+          <a class="card-link-btn" href="https://www.163.com/dy/article/KIR067BB0556J14I.html" target="_blank" rel="noopener noreferrer">📰 2026大会报道</a>
+        </div>
       </div>
 
       <!-- CARD 6: FEINX 菲利克斯 -->
@@ -842,6 +1150,7 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <div class="brand-name">FEINX 菲利克斯 <span class="badge badge-ecosystem">🌐 生态延伸</span></div>
             <div class="origin">🇨🇳 中国 · 专注小宠(兔/仓鼠/龙猫) · 与PILTON全球战略合作</div>
           </div>
+          <span class="threat-trend trend-flat">→ 威胁持平</span>
         </div>
         <div class="positioning">小宠智能舱开创者 — "不打扰的温柔科技"，VIVOX Cozy的参考对象</div>
         <div class="metric-row">
@@ -862,22 +1171,25 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <li>专注小宠(兔/仓鼠/龙猫)，无爬宠产品</li>
             <li>无AI视觉/健康监测</li>
             <li>品牌认知度低，渠道有限</li>
-            <li>物理温控技术有持续时长限制</li>
           </ul>
         </div>
         <div class="risk-note">⚠️ FEINX是VIVOX Cozy(¥999小宠缸)的直接参考，但Cozy需爬宠兼容性才是真差异化</div>
         <div class="tags"><span class="tag">相变降温</span><span class="tag">UVC消杀</span><span class="tag">HEPA净化</span><span class="tag">军工材质</span><span class="tag">小宠专用</span></div>
+        <div class="card-links">
+          <a class="card-link-btn" href="https://www.chwang.com/article/196054355382" target="_blank" rel="noopener noreferrer">📰 亚宠展报道</a>
+        </div>
       </div>
 
       <!-- CARD 7: 宠尔顿 PILTON -->
-      <div class="comp-card" data-category="pet" data-keywords="宠尔顿 PILTON 智能宠物舱 新风 温控 SaaS 医疗级 灭菌 全品类">
+      <div class="comp-card" data-category="pet" data-keywords="宠尔顿 PILTON 智能宠物舱 新风 温控 SaaS 医疗级 灭菌 全品类 Z系列">
         <div class="card-header">
           <div>
             <div class="brand-name">宠尔顿 PILTON <span class="badge badge-pet">🐾 智能宠物舱龙头</span></div>
-            <div class="origin">🇨🇳 中国 · 三轮融资 · P/G/H/Z系列 · 14个SKU</div>
+            <div class="origin">🇨🇳 中国 · 三轮融资+国资入股 · P/G/H/Z/B系列 · 14个SKU · 2026年3.0版本迭代完成</div>
           </div>
+          <span class="threat-trend trend-flat">→ 爬宠关联低</span>
         </div>
-        <div class="positioning">智能宠物舱开创者 — 医疗级防护+全品类+模块化SaaS</div>
+        <div class="positioning">智能宠物舱开创者 — 3.0版本：±1℃恒温+新风+AI摄像头+UV灭菌+智慧大屏</div>
         <div class="metric-row">
           <div class="metric-item"><div class="label">参考价格</div><div class="value">¥2,000-8,000(估)</div></div>
           <div class="metric-item"><div class="label">目标用户</div><div class="value">猫/狗/鸟/异宠</div></div>
@@ -886,11 +1198,12 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
         <div class="swot-section">
           <h4 style="color:var(--green)">✓ 优势</h4>
           <ul class="swot-list strengths">
-            <li>品类开创者，14个SKU覆盖猫狗鸟异宠</li>
-            <li>医疗级蜂窝活性炭滤芯(97%抑菌率)</li>
-            <li>AI猫语翻译+宠物问诊+健康数据库</li>
-            <li>Z系列整合SaaS管理，切入B端商用</li>
-            <li>三轮融资，资金实力雄厚</li>
+            <li>品类开创者，14个SKU覆盖猫狗鸟异宠(N/S/G/B系列)</li>
+            <li>3.0版本：±1℃精准恒温(陶瓷加热器+变频算法)+HEPA新风循环</li>
+            <li>AI高清摄像头+超级智慧屏+UV灭菌系统+远程云养宠</li>
+            <li>与海底捞(宠物友好门店)/亚朵酒店(宠物友好房型)深度合作</li>
+            <li>50项核心技术标准制定者+近百项专利+法国设计奖金奖</li>
+            <li>国资入股+三轮融资，已进驻全球10余个国家</li>
           </ul>
           <h4 style="color:var(--red)">✗ 不足</h4>
           <ul class="swot-list weaknesses">
@@ -901,7 +1214,11 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
           </ul>
         </div>
         <div class="risk-note">⚠️ 宠尔顿的"全品类+AI"模式值得VIVOX学习，但其爬宠深度不足正是VIVOX的破局点</div>
-        <div class="tags"><span class="tag">医疗级</span><span class="tag">全品类14SKU</span><span class="tag">AI问诊</span><span class="tag">SaaS管理</span><span class="tag">新风消杀</span></div>
+        <div class="tags"><span class="tag">3.0版本</span><span class="tag">±1℃恒温</span><span class="tag">新风循环</span><span class="tag">AI摄像头</span><span class="tag">UV灭菌</span><span class="tag">B端SaaS</span><span class="tag">海底捞合作</span></div>
+        <div class="card-links">
+          <a class="card-link-btn primary" href="https://www.piltonpet.com/home" target="_blank" rel="noopener noreferrer">🌐 官方网站</a>
+          <a class="card-link-btn" href="https://www.jiemian.com/article/14090488.html" target="_blank" rel="noopener noreferrer">📰 2026新品报道</a>
+        </div>
       </div>
 
       <!-- CARD 8: Herpstat / Spyder Robotics -->
@@ -911,6 +1228,7 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <div class="brand-name">Herpstat / Spyder Robotics <span class="badge badge-traditional">🌍 海外专业</span></div>
             <div class="origin">🇺🇸 美国 · 专业爬宠温控器领导品牌 · Herpstat 1/2/4/6系列</div>
           </div>
+          <span class="threat-trend trend-flat">→ 威胁持平</span>
         </div>
         <div class="positioning">海外专业温控器龙头 — 比例加热+多探头，专业繁殖场标配</div>
         <div class="metric-row">
@@ -934,8 +1252,11 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <li>价格高，仅服务专业用户</li>
           </ul>
         </div>
-        <div class="risk-note">⚠️ Herpstat代表"专业温控"天花板，VIVOX的±0.5°C三区温控需对标其精度，但必须补上IoT+AI短板</div>
+        <div class="risk-note">⚠️ Herpstat代表"专业温控"天花板，VIVOX的±0.5°C三区温控需对标其精度，并补上IoT+AI短板</div>
         <div class="tags"><span class="tag">比例加热</span><span class="tag">多探头</span><span class="tag">专业繁殖场</span><span class="tag">无IoT</span><span class="tag">无AI</span></div>
+        <div class="card-links">
+          <a class="card-link-btn primary" href="https://www.spyderrobotics.com" target="_blank" rel="noopener noreferrer">🌐 官方网站</a>
+        </div>
       </div>
 
       <!-- CARD 9: GIXONE 极问 -->
@@ -945,6 +1266,7 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <div class="brand-name">GIXONE 极问 <span class="badge badge-pet">🐾 智能宠物舱</span></div>
             <div class="origin">🇨🇳 中国 · 佛山市亲好宠物 · 68项专利 · 红点/IF设计奖</div>
           </div>
+          <span class="threat-trend trend-flat">→ 威胁持平</span>
         </div>
         <div class="positioning">设计驱动型智能宠物舱 — 全碳除臭+曲面美学+68项专利</div>
         <div class="metric-row">
@@ -967,8 +1289,11 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <li>品牌知名度较低</li>
           </ul>
         </div>
-        <div class="risk-note">⚠️ GIXONE的专利+设计奖路线值得VIVOX在工业设计层面学习</div>
+        <div class="risk-note">⚠️ GIXONE的专利+设计奖路线值得VIVOX在工业设计层面学习，目前对爬宠赛道威胁低</div>
         <div class="tags"><span class="tag">68项专利</span><span class="tag">红点设计</span><span class="tag">全碳除臭</span><span class="tag">智能冷暖</span></div>
+        <div class="card-links">
+          <a class="card-link-btn" href="https://www.sohu.com/a/929429527_121695480" target="_blank" rel="noopener noreferrer">📰 亚宠展报道</a>
+        </div>
       </div>
 
       <!-- CARD 10: Aoo -->
@@ -978,6 +1303,7 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <div class="brand-name">Aoo <span class="badge badge-pet">🐾 B端宠物舱</span></div>
             <div class="origin">🇨🇳 中国 · 杭州艾达家居 · 主攻B端商业场景</div>
           </div>
+          <span class="threat-trend trend-flat">→ 威胁持平</span>
         </div>
         <div class="positioning">B端商业场景智能宠物舱 — 科技美学+零化学干预+店铺陈列专用</div>
         <div class="metric-row">
@@ -1002,6 +1328,9 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
         </div>
         <div class="risk-note">⚠️ Aoo的B端场景与VIVOX未来线下渠道可能冲突，需关注其渠道拓展</div>
         <div class="tags"><span class="tag">B端场景</span><span class="tag">自然光谱</span><span class="tag">零化学净化</span><span class="tag">商业陈列</span></div>
+        <div class="card-links">
+          <a class="card-link-btn" href="https://www.sohu.com/a/929429527_121695480" target="_blank" rel="noopener noreferrer">📰 亚宠展报道</a>
+        </div>
       </div>
 
       <!-- CARD 11: 萌宠千禧 -->
@@ -1011,6 +1340,7 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <div class="brand-name">萌宠千禧 <span class="badge badge-pet">🐾 PILTON渠道品牌</span></div>
             <div class="origin">🇨🇳 中国 · 湖州宠伴伴科技 · PILTON渠道授权运营</div>
           </div>
+          <span class="threat-trend trend-flat">→ 低威胁</span>
         </div>
         <div class="positioning">PILTON渠道授权品牌 — "宠物关怀"理念+公益领养场景试点</div>
         <div class="metric-row">
@@ -1034,6 +1364,9 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
         </div>
         <div class="risk-note">⚠️ 低威胁，但PILTON生态扩张值得关注</div>
         <div class="tags"><span class="tag">PILTON授权</span><span class="tag">公益领养</span><span class="tag">新风消杀</span></div>
+        <div class="card-links">
+          <a class="card-link-btn" href="https://www.sohu.com/a/929429527_121695480" target="_blank" rel="noopener noreferrer">📰 亚宠展报道</a>
+        </div>
       </div>
 
       <!-- CARD 12: 洁宠智能 -->
@@ -1043,6 +1376,7 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <div class="brand-name">洁宠智能 <span class="badge badge-watch">👀 间接竞品</span> <span class="badge badge-new">🆕 新融资</span></div>
             <div class="origin">🇨🇳 中国 · 苏州 · 2025年获1000万元天使轮 · 宠物智能科技</div>
           </div>
+          <span class="threat-trend trend-flat">→ 待观察</span>
         </div>
         <div class="positioning">宠物智能科技新入局者 — 融资但产品未明，潜在威胁</div>
         <div class="metric-row">
@@ -1065,6 +1399,9 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
         </div>
         <div class="risk-note">⚠️ 融资规模大于爬托邦，若切入爬宠赛道需密切跟踪</div>
         <div class="tags"><span class="tag">1000万融资</span><span class="tag">产品未明</span><span class="tag">潜在威胁</span></div>
+        <div class="card-links">
+          <a class="card-link-btn" href="https://www.sohu.com/a/936964962_99982343" target="_blank" rel="noopener noreferrer">💰 融资报道</a>
+        </div>
       </div>
 
       <!-- CARD 13: ESP32 DIY -->
@@ -1072,10 +1409,11 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
         <div class="card-header">
           <div>
             <div class="brand-name">ESP32 DIY 智能缸 <span class="badge badge-watch">👀 开源威胁</span></div>
-            <div class="origin">🌐 全球 · Hackaday 2025年报道 · 开源硬件社区</div>
+            <div class="origin">🌐 全球 · Hackster.io 2026年报道 · 开源硬件社区</div>
           </div>
+          <span class="threat-trend trend-down">↓ 低威胁</span>
         </div>
-        <div class="positioning">开源DIY智能爬宠箱 — ESP32+传感器，极客群体自造</div>
+        <div class="positioning">开源DIY智能爬宠箱 — ESP32+传感器，极客群体自造，反向验证VIVOX机会</div>
         <div class="metric-row">
           <div class="metric-item"><div class="label">参考价格</div><div class="value">¥200-500(物料)</div></div>
           <div class="metric-item"><div class="label">目标用户</div><div class="value">极客/Maker</div></div>
@@ -1095,8 +1433,53 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <li>无AI/无物种数据库/无APP生态</li>
           </ul>
         </div>
-        <div class="risk-note">⚠️ ESP32 DIY验证了"智能爬宠箱"技术可行性，但恰恰说明VIVOX的壁垒不在硬件而在AI+数据+生态</div>
+        <div class="risk-note">⚠️ ESP32 DIY恰恰说明VIVOX的壁垒不在硬件而在AI+数据+生态，硬件门槛很低</div>
         <div class="tags"><span class="tag">ESP32</span><span class="tag">开源</span><span class="tag">DIY</span><span class="tag">低成本</span><span class="tag">极客向</span></div>
+        <div class="card-links">
+          <a class="card-link-btn primary" href="https://www.hackster.io/rau7han/iot-based-esp32-smart-terrarium-19ed25" target="_blank" rel="noopener noreferrer">📰 Hackster报道</a>
+          <a class="card-link-btn" href="https://github.com/Rau7han/ESP32-Terrarium" target="_blank" rel="noopener noreferrer">💻 GitHub源码</a>
+        </div>
+      </div>
+
+      <!-- CARD 14: 灵尾科技 🆕 -->
+      <div class="comp-card" data-category="direct" data-keywords="灵尾科技 AI智能爬宠伴侣 Interzoo 出海 德国 欧洲 模拟自然光照 温湿度 AI宠物看护 CES AWE">
+        <div class="card-header">
+          <div>
+            <div class="brand-name">灵尾科技 <span class="badge badge-threat">⚠ 新晋直接威胁</span> <span class="badge badge-new">🆕 2026-05</span></div>
+            <div class="origin">🇨🇳 中国 · 全球首创AI智能爬宠伴侣 · 2026年连战CES/AWE/Interzoo四场全球大展</div>
+          </div>
+          <span class="threat-trend trend-up">↑ 威胁急升</span>
+        </div>
+        <div class="positioning">"AI智能爬宠伴侣" — 模拟自然光照+温湿度精准调控+AI看护，聚焦海外高端市场</div>
+        <div class="metric-row">
+          <div class="metric-item"><div class="label">参考价格</div><div class="value">TBD(高端)</div></div>
+          <div class="metric-item"><div class="label">目标用户</div><div class="value">海外高端玩家</div></div>
+          <div class="metric-item"><div class="label">核心壁垒</div><div class="value">AI+出海先发</div></div>
+        </div>
+        <div class="swot-section">
+          <h4 style="color:var(--green)">✓ 优势</h4>
+          <ul class="swot-list strengths">
+            <li>全球首创AI智能爬宠伴侣，"AI+爬宠"定位与VIVOX正面竞争</li>
+            <li>2026年连战CES(1月)/AWE(3月)/日本宠物展(4月)/Interzoo(5月)，出海速度惊人</li>
+            <li>Interzoo现场获德/英/法代理商高度评价，签下超千万元意向订单</li>
+            <li>产品覆盖智能猫砂盆/喂食器/饮水机/伴宠机器人等多品类</li>
+            <li>专注海外高端市场，填补欧洲智能爬宠箱空白</li>
+          </ul>
+          <h4 style="color:var(--red)">✗ 不足</h4>
+          <ul class="swot-list weaknesses">
+            <li>品牌认知度极低，产品刚面世，用户验证不足</li>
+            <li>无物种数据库/三区温控等爬宠专业深度功能披露</li>
+            <li>同时做多品类(猫砂盆/喂食器等)，爬宠并非唯一焦点</li>
+            <li>国内市场布局信息缺失</li>
+          </ul>
+        </div>
+        <div class="risk-note">⚠️ 灵尾科技是VIVOX在AI+爬宠赛道的直接竞争者，且出海速度更快！VIVOX需加速M18出海时间线，并强化物种数据库+三区温控的不可替代性</div>
+        <div class="tags"><span class="tag">AI爬宠伴侣</span><span class="tag">Interzoo 2026</span><span class="tag">出海先行</span><span class="tag">多品类</span><span class="tag">欧洲高端</span><span class="tag">千万元订单</span></div>
+        <div class="card-links">
+          <a class="card-link-btn primary" href="https://news.hexun.com/2026-05-17/224167355.html" target="_blank" rel="noopener noreferrer">📰 Interzoo报道</a>
+          <a class="card-link-btn" href="https://www.jiemian.com/article/14439114.html" target="_blank" rel="noopener noreferrer">📰 界面新闻</a>
+          <a class="card-link-btn" href="https://news.qq.com/rain/a/20260516A04NN300" target="_blank" rel="noopener noreferrer">📰 腾讯新闻</a>
+        </div>
       </div>
 
     </div>
@@ -1104,9 +1487,9 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
 
   <!-- ===== COMPARISON TABLE ===== -->
   <div class="section" id="compare">
-    <h2 class="section-title">📊 竞品对比表格 <span class="count">— 8维度横评</span></h2>
+    <h2 class="section-title">📊 竞品对比表格 <span class="count">— 9维度横评 · 含VIVOX领先度</span></h2>
     <div class="table-wrapper">
-      <table>
+      <table id="compareTable">
         <thead>
           <tr>
             <th>#</th>
@@ -1119,164 +1502,79 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <th>物种数据库</th>
             <th>配件生态</th>
             <th>威胁等级</th>
+            <th>VIVOX领先度</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
-            <td class="td-brand">爬托邦</td>
-            <td>智能爬宠箱(直接)</td>
-            <td>¥1,500-2,500</td>
-            <td class="check">✓ 分区温控</td>
-            <td class="cross">✗</td>
-            <td class="partial">△ 基础</td>
-            <td class="cross">✗</td>
-            <td class="check">✓ 造景系</td>
-            <td class="td-score score-high">🔴 高</td>
+            <td>1</td><td class="td-brand">爬托邦</td><td>智能爬宠箱(直接)</td><td>¥1,500-2,500</td>
+            <td class="check">✓ 分区温控</td><td class="cross">✗</td><td class="partial">△ 基础</td><td class="cross">✗</td><td class="check">✓ 造景系</td>
+            <td class="td-score score-high">🔴 高</td><td class="td-vivox-lead lead-ahead" title="VIVOX具备AI视觉+物种库+三区精控，全面领先">+++ AI+物种库</td>
           </tr>
           <tr>
-            <td>2</td>
-            <td class="td-brand">InnoYolo 智阖</td>
-            <td>情绪生态缸(直接)</td>
-            <td>¥2,000-4,000</td>
-            <td class="check">✓ 一体化</td>
-            <td class="check">✓ AIGC+雷达</td>
-            <td class="check">✓ 专属APP</td>
-            <td class="cross">✗</td>
-            <td class="partial">△ VR规划</td>
-            <td class="td-score score-high">🔴 高</td>
+            <td>2</td><td class="td-brand">InnoYolo 智阖</td><td>情绪生态缸(直接)</td><td>¥2,000-4,000</td>
+            <td class="check">✓ 一体化</td><td class="check">✓ AIGC+雷达</td><td class="check">✓ 专属APP</td><td class="cross">✗</td><td class="partial">△ VR规划</td>
+            <td class="td-score score-high">🔴 高</td><td class="td-vivox-lead lead-par" title="VIVOX物种库领先，但OLED+情绪交互差距明显">= 各有优势</td>
           </tr>
           <tr>
-            <td>3</td>
-            <td class="td-brand">达芬奇黑洞</td>
-            <td>传统爬宠箱龙头</td>
-            <td>¥200-800</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="partial">△ 基础</td>
-            <td class="td-score score-mid">🟡 中</td>
+            <td>3</td><td class="td-brand">达芬奇黑洞</td><td>传统爬宠箱龙头</td><td>¥200-800</td>
+            <td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td><td class="partial">△ 基础</td>
+            <td class="td-score score-mid">🟡 中</td><td class="td-vivox-lead lead-ahead" title="全面领先，传统品牌无智能能力">+++ 全维度领先</td>
           </tr>
           <tr>
-            <td>4</td>
-            <td class="td-brand">Exo Terra</td>
-            <td>全球传统龙头</td>
-            <td>¥150-1,500</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="check">✓ 全品类</td>
-            <td class="td-score score-mid">🟡 中</td>
+            <td>4</td><td class="td-brand">Exo Terra</td><td>全球传统龙头</td><td>¥150-1,500</td>
+            <td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td><td class="check">✓ 全品类</td>
+            <td class="td-score score-mid">🟡 中</td><td class="td-vivox-lead lead-ahead" title="智能化全面领先，配件生态差距">++ 智能化领先</td>
           </tr>
           <tr>
-            <td>5</td>
-            <td class="td-brand">REPTIZOO 瑞皮</td>
-            <td>传统→智能配件</td>
-            <td>¥100-500</td>
-            <td class="check">✓ PID温控</td>
-            <td class="cross">✗</td>
-            <td class="check">✓ 亿田云</td>
-            <td class="cross">✗</td>
-            <td class="partial">△ 灯/垫</td>
-            <td class="td-score score-mid">🟡 中</td>
+            <td>5</td><td class="td-brand">REPTIZOO 瑞皮</td><td>传统→智能配件</td><td>¥100-500</td>
+            <td class="check">✓ PID温控</td><td class="cross">✗</td><td class="check">✓ 亿田云</td><td class="cross">✗</td><td class="partial">△ 灯/垫</td>
+            <td class="td-score score-mid">🟡 中</td><td class="td-vivox-lead lead-ahead" title="VIVOX整机方案+AI+物种库优势明显">++ 整机+AI领先</td>
           </tr>
           <tr>
-            <td>6</td>
-            <td class="td-brand">FEINX 菲利克斯</td>
-            <td>小宠智能舱</td>
-            <td>¥800-1,500</td>
-            <td class="check">✓ 相变+风暖</td>
-            <td class="cross">✗</td>
-            <td class="partial">△ APP互联</td>
-            <td class="cross">✗</td>
-            <td class="partial">△ 滤芯</td>
-            <td class="td-score score-low">🟢 低</td>
+            <td>6</td><td class="td-brand">FEINX 菲利克斯</td><td>小宠智能舱</td><td>¥800-1,500</td>
+            <td class="check">✓ 相变+风暖</td><td class="cross">✗</td><td class="partial">△ APP互联</td><td class="cross">✗</td><td class="partial">△ 滤芯</td>
+            <td class="td-score score-low">🟢 低</td><td class="td-vivox-lead lead-ahead" title="VIVOX爬宠专业深度+AI优势">++ 爬宠专业+AI</td>
           </tr>
           <tr>
-            <td>7</td>
-            <td class="td-brand">宠尔顿 PILTON</td>
-            <td>全品类智能舱</td>
-            <td>¥2,000-8,000</td>
-            <td class="check">✓ 恒温恒湿</td>
-            <td class="check">✓ 问诊+翻译</td>
-            <td class="check">✓ SaaS</td>
-            <td class="cross">✗</td>
-            <td class="check">✓ 模块化</td>
-            <td class="td-score score-mid">🟡 中</td>
+            <td>7</td><td class="td-brand">宠尔顿 PILTON</td><td>全品类智能舱</td><td>¥2,000-8,000</td>
+            <td class="check">✓ 恒温恒湿</td><td class="check">✓ 问诊+翻译</td><td class="check">✓ SaaS</td><td class="cross">✗</td><td class="check">✓ 模块化</td>
+            <td class="td-score score-mid">🟡 中</td><td class="td-vivox-lead lead-par" title="宠尔顿AI+SaaS成熟，VIVOX爬宠专业度领先">= 定位互补</td>
           </tr>
           <tr>
-            <td>8</td>
-            <td class="td-brand">Herpstat</td>
-            <td>专业温控器(海外)</td>
-            <td>$125-519</td>
-            <td class="check">✓ 比例加热</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="td-score score-low">🟢 低</td>
+            <td>8</td><td class="td-brand">Herpstat</td><td>专业温控器(海外)</td><td>$125-519</td>
+            <td class="check">✓ 比例加热</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td><td class="cross">✗</td>
+            <td class="td-score score-low">🟢 低</td><td class="td-vivox-lead lead-ahead" title="VIVOX整机+IoT+AI全面领先，精度需对标">++ IoT+AI领先</td>
           </tr>
           <tr>
-            <td>9</td>
-            <td class="td-brand">GIXONE 极问</td>
-            <td>设计型智能宠物舱</td>
-            <td>¥1,500-3,000</td>
-            <td class="check">✓ 智能冷暖</td>
-            <td class="cross">✗</td>
-            <td class="partial">△ 远程</td>
-            <td class="cross">✗</td>
-            <td class="partial">△ 滤网</td>
-            <td class="td-score score-low">🟢 低</td>
+            <td>9</td><td class="td-brand">GIXONE 极问</td><td>设计型智能宠物舱</td><td>¥1,500-3,000</td>
+            <td class="check">✓ 智能冷暖</td><td class="cross">✗</td><td class="partial">△ 远程</td><td class="cross">✗</td><td class="partial">△ 滤网</td>
+            <td class="td-score score-low">🟢 低</td><td class="td-vivox-lead lead-ahead" title="爬宠专业+AI领先">++ 爬宠+AI领先</td>
           </tr>
           <tr>
-            <td>10</td>
-            <td class="td-brand">Aoo</td>
-            <td>B端商业宠物舱</td>
-            <td>¥3,000+</td>
-            <td class="check">✓ 恒温</td>
-            <td class="cross">✗</td>
-            <td class="partial">△ 系统</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="td-score score-low">🟢 低</td>
+            <td>10</td><td class="td-brand">Aoo</td><td>B端商业宠物舱</td><td>¥3,000+</td>
+            <td class="check">✓ 恒温</td><td class="cross">✗</td><td class="partial">△ 系统</td><td class="cross">✗</td><td class="cross">✗</td>
+            <td class="td-score score-low">🟢 低</td><td class="td-vivox-lead lead-ahead" title="VIVOX爬宠专业+AI全面领先">+++ 全维度领先</td>
           </tr>
           <tr>
-            <td>11</td>
-            <td class="td-brand">萌宠千禧</td>
-            <td>PILTON渠道品牌</td>
-            <td>¥1,500-3,000</td>
-            <td class="check">✓(PILTON)</td>
-            <td class="cross">✗</td>
-            <td class="partial">△(PILTON)</td>
-            <td class="cross">✗</td>
-            <td class="partial">△</td>
-            <td class="td-score score-low">🟢 低</td>
+            <td>11</td><td class="td-brand">萌宠千禧</td><td>PILTON渠道品牌</td><td>¥1,500-3,000</td>
+            <td class="check">✓(PILTON)</td><td class="cross">✗</td><td class="partial">△(PILTON)</td><td class="cross">✗</td><td class="partial">△</td>
+            <td class="td-score score-low">🟢 低</td><td class="td-vivox-lead lead-ahead" title="爬宠专业+AI全面领先">+++ 全维度领先</td>
           </tr>
           <tr>
-            <td>12</td>
-            <td class="td-brand">洁宠智能</td>
-            <td>宠物智能科技(TBD)</td>
-            <td>TBD</td>
-            <td>TBD</td>
-            <td>TBD</td>
-            <td>TBD</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="td-score score-low">🟢 低(监控)</td>
+            <td>12</td><td class="td-brand">洁宠智能</td><td>宠物智能科技(TBD)</td><td>TBD</td>
+            <td>TBD</td><td>TBD</td><td>TBD</td><td class="cross">✗</td><td class="cross">✗</td>
+            <td class="td-score score-low">🟢 低(监控)</td><td class="td-vivox-lead lead-ahead" title="产品未发布，VIVOX暂领先">? 待定</td>
           </tr>
           <tr>
-            <td>13</td>
-            <td class="td-brand">ESP32 DIY</td>
-            <td>开源DIY</td>
-            <td>¥200-500</td>
-            <td class="partial">△ 自建</td>
-            <td class="cross">✗</td>
-            <td class="partial">△ 自建</td>
-            <td class="cross">✗</td>
-            <td class="cross">✗</td>
-            <td class="td-score score-low">🟢 低</td>
+            <td>13</td><td class="td-brand">ESP32 DIY</td><td>开源DIY</td><td>¥200-500</td>
+            <td class="partial">△ 自建</td><td class="cross">✗</td><td class="partial">△ 自建</td><td class="cross">✗</td><td class="cross">✗</td>
+            <td class="td-score score-low">🟢 低</td><td class="td-vivox-lead lead-ahead" title="产品化+生态全面领先">+++ 产品化领先</td>
+          </tr>
+          <tr>
+            <td>14</td><td class="td-brand">灵尾科技 🆕</td><td>AI智能爬宠伴侣(直接)</td><td>TBD(高端)</td>
+            <td class="check">✓ 精准调控</td><td class="check">✓ AI看护</td><td class="check">✓ 远程</td><td class="cross">✗</td><td class="partial">△ 多品类</td>
+            <td class="td-score score-high">🔴 高</td><td class="td-vivox-lead lead-par" title="灵尾AI+出海速度领先，VIVOX物种库+三区温控+配件生态仍有差异化空间">= 互有优势</td>
           </tr>
           <!-- VIVOX Self -->
           <tr style="background:rgba(59,130,246,0.08);">
@@ -1290,80 +1588,157 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
             <td class="check">✓ 200+物种</td>
             <td class="check">✓ 6路扩展</td>
             <td class="td-score" style="color:var(--accent);">— 我方</td>
+            <td class="td-vivox-lead" style="color:var(--accent);">基准</td>
           </tr>
         </tbody>
       </table>
     </div>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">💡 悬停"VIVOX领先度"列可查看具体分析 · +++ 全面领先 / ++ 局部领先 / = 互补对等 / ? 待观察</p>
   </div>
 
   <!-- ===== POSITIONING MATRIX ===== -->
   <div class="section" id="matrix">
-    <h2 class="section-title">📍 定位矩阵 <span class="count">— 智能化程度 × 爬宠专业度</span></h2>
-    <div class="matrix-container" id="matrixContainer">
-      <div class="matrix-divider-x"></div>
-      <div class="matrix-divider-y"></div>
-      <div class="matrix-axis-x">智能化程度 →</div>
-      <div class="matrix-axis-y">爬宠专业度 →</div>
-      <!-- Quadrant labels -->
-      <div class="matrix-quadrant" style="top:8%;left:55%;font-size:11px;opacity:0.5;">科技实验区</div>
-      <div class="matrix-quadrant" style="top:8%;left:5%;font-size:11px;opacity:0.5;">传统守旧区</div>
-      <div class="matrix-quadrant" style="top:55%;left:55%;font-size:11px;opacity:0.5;color:var(--accent);">🏆 黄金象限</div>
-      <div class="matrix-quadrant" style="top:55%;left:5%;font-size:11px;opacity:0.5;">智能但非专业</div>
-      <!-- Dots positioned by data -->
-      <!-- VIVOX: high smart (78%), high reptile (88%) -->
-      <div class="matrix-dot" style="left:78%;top:12%;width:48px;height:48px;background:var(--accent);box-shadow:0 0 16px var(--accent);">V<div class="tooltip">VIVOX — 三区温控+AI视觉+200物种库<br>📍 黄金象限领导者</div></div>
-      <!-- 爬托邦: mid smart (35%), high reptile (78%) -->
-      <div class="matrix-dot" style="left:35%;top:22%;width:40px;height:40px;background:var(--red);">爬<div class="tooltip">爬托邦 — 电路集成+新手友好<br>⚠ 最大直接威胁</div></div>
-      <!-- InnoYolo: high smart (68%), low reptile (30%) -->
-      <div class="matrix-dot" style="left:68%;top:70%;width:38px;height:38px;background:var(--orange);">智<div class="tooltip">InnoYolo 智阖 — 情绪价值+AIGC<br>👀 智能但爬宠深度不足</div></div>
-      <!-- 达芬奇黑洞: low smart (5%), high reptile (70%) -->
-      <div class="matrix-dot" style="left:8%;top:30%;width:32px;height:32px;background:var(--text-muted);">达<div class="tooltip">达芬奇黑洞 — 传统龙头无智能<br>🏗️ 最大转化池</div></div>
-      <!-- Exo Terra: low smart (5%), mid reptile (60%) -->
-      <div class="matrix-dot" style="left:6%;top:40%;width:30px;height:30px;background:var(--text-muted);">E<div class="tooltip">Exo Terra — 全球龙头无智能<br>🌍 出海最大机会</div></div>
-      <!-- REPTIZOO: low-mid smart (22%), mid reptile (50%) -->
-      <div class="matrix-dot" style="left:22%;top:50%;width:28px;height:28px;background:var(--orange);">R<div class="tooltip">REPTIZOO 瑞皮 — WiFi温控配件<br>👀 传统→智能转型</div></div>
-      <!-- 宠尔顿: mid smart (50%), low reptile (15%) -->
-      <div class="matrix-dot" style="left:50%;top:85%;width:32px;height:32px;background:var(--cyan);">P<div class="tooltip">宠尔顿 PILTON — 全品类+AI+SaaS<br>🐾 智能舱龙头但非爬宠</div></div>
-      <!-- Herpstat: low smart (10%), high reptile (85%) -->
-      <div class="matrix-dot" style="left:12%;top:15%;width:26px;height:26px;background:var(--text-muted);">H<div class="tooltip">Herpstat — 专业温控天花板<br>🌍 海外专业用户首选</div></div>
-      <!-- FEINX: mid smart (30%), low reptile (20%) -->
-      <div class="matrix-dot" style="left:30%;top:80%;width:24px;height:24px;background:var(--purple);">F<div class="tooltip">FEINX 菲利克斯 — 小宠智能舱<br>🌐 Cozy参考对象</div></div>
+    <h2 class="section-title">📍 定位矩阵 <span class="count">— 智能化程度 × 爬宠专业度 · 点击图例高亮</span></h2>
+    <!-- ⑤ 矩阵+图例并排布局 (新增) -->
+    <div class="matrix-layout">
+      <div class="matrix-container" id="matrixContainer">
+        <div class="matrix-divider-x"></div>
+        <div class="matrix-divider-y"></div>
+        <div class="matrix-axis-x">智能化程度 →</div>
+        <div class="matrix-axis-y">爬宠专业度 →</div>
+        <div class="matrix-quadrant" style="top:8%;left:55%;color:var(--accent);opacity:0.6;font-weight:600;">🏆 黄金象限</div>
+        <div class="matrix-quadrant" style="top:8%;left:5%;">传统守旧区</div>
+        <div class="matrix-quadrant" style="top:58%;left:55%;">科技实验区</div>
+        <div class="matrix-quadrant" style="top:58%;left:5%;">智能非专业</div>
+        <!-- VIVOX -->
+        <div class="matrix-dot" id="dot-vivox" data-legend="vivox" style="left:78%;top:12%;width:48px;height:48px;background:var(--accent);box-shadow:0 0 16px rgba(59,130,246,0.6);" onclick="highlightLegend('vivox')">V<div class="tooltip">VIVOX — 三区温控+AI视觉+200物种库<br>📍 黄金象限领导者</div></div>
+        <!-- 爬托邦 -->
+        <div class="matrix-dot" id="dot-ptb" data-legend="ptb" style="left:35%;top:22%;width:40px;height:40px;background:var(--red);" onclick="highlightLegend('ptb')">爬<div class="tooltip">爬托邦 — 电路集成+新手友好<br>⚠ 最大直接威胁，融资后提速</div></div>
+        <!-- InnoYolo -->
+        <div class="matrix-dot" id="dot-iy" data-legend="iy" style="left:68%;top:70%;width:38px;height:38px;background:var(--orange);" onclick="highlightLegend('iy')">智<div class="tooltip">InnoYolo 智阖 — 情绪价值+AIGC<br>👀 谋划出海，智能但爬宠深度不足</div></div>
+        <!-- 达芬奇黑洞 -->
+        <div class="matrix-dot" id="dot-dv" data-legend="dv" style="left:8%;top:30%;width:32px;height:32px;background:var(--text-muted);" onclick="highlightLegend('dv')">达<div class="tooltip">达芬奇黑洞 — 传统龙头无智能<br>🏗️ 最大转化池</div></div>
+        <!-- Exo Terra -->
+        <div class="matrix-dot" id="dot-et" data-legend="et" style="left:6%;top:40%;width:30px;height:30px;background:var(--text-muted);" onclick="highlightLegend('et')">E<div class="tooltip">Exo Terra — 全球龙头无智能<br>🌍 出海最大机会</div></div>
+        <!-- REPTIZOO -->
+        <div class="matrix-dot" id="dot-rz" data-legend="rz" style="left:28%;top:50%;width:28px;height:28px;background:var(--orange);" onclick="highlightLegend('rz')">R<div class="tooltip">REPTIZOO 瑞皮 — WiFi温控配件<br>👀 智能化提速，值得关注</div></div>
+        <!-- 宠尔顿 -->
+        <div class="matrix-dot" id="dot-pt" data-legend="pt" style="left:50%;top:85%;width:32px;height:32px;background:var(--cyan);" onclick="highlightLegend('pt')">P<div class="tooltip">宠尔顿 PILTON — 全品类+AI+SaaS<br>🐾 智能舱龙头但非爬宠</div></div>
+        <!-- Herpstat -->
+        <div class="matrix-dot" id="dot-hs" data-legend="hs" style="left:12%;top:15%;width:26px;height:26px;background:var(--text-muted);" onclick="highlightLegend('hs')">H<div class="tooltip">Herpstat — 专业温控天花板<br>🌍 无IoT，海外专业用户首选</div></div>
+        <!-- FEINX -->
+        <div class="matrix-dot" id="dot-fx" data-legend="fx" style="left:30%;top:80%;width:24px;height:24px;background:var(--purple);" onclick="highlightLegend('fx')">F<div class="tooltip">FEINX 菲利克斯 — 小宠智能舱<br>🌐 Cozy参考对象</div></div>
+        <!-- 灵尾科技 -->
+        <div class="matrix-dot" id="dot-lw" data-legend="lw" style="left:72%;top:38%;width:36px;height:36px;background:var(--red);box-shadow:0 0 10px rgba(239,68,68,0.5);" onclick="highlightLegend('lw')">灵<div class="tooltip">灵尾科技 — AI智能爬宠伴侣+出海先行<br>⚠ 2026-05新晋直接威胁，Interzoo千万元订单</div></div>
+      </div>
+
+      <!-- 矩阵图例 (新增) -->
+      <div class="matrix-legend">
+        <h4>📍 品牌图例 — 点击高亮</h4>
+        <div class="legend-item" id="leg-vivox" onclick="highlightLegend('vivox')">
+          <div class="legend-dot" style="background:var(--accent);">V</div>
+          <div class="legend-info"><div class="legend-name">VIVOX (我方)</div><div class="legend-pos">高智能 × 高爬宠 — 黄金象限领导者</div></div>
+        </div>
+        <div class="legend-item" id="leg-ptb" onclick="highlightLegend('ptb')">
+          <div class="legend-dot" style="background:var(--red);">爬</div>
+          <div class="legend-info"><div class="legend-name">爬托邦</div><div class="legend-pos">中智能 × 高爬宠 — 最大直接威胁↑</div></div>
+        </div>
+        <div class="legend-item" id="leg-iy" onclick="highlightLegend('iy')">
+          <div class="legend-dot" style="background:var(--orange);">智</div>
+          <div class="legend-info"><div class="legend-name">InnoYolo 智阖</div><div class="legend-pos">高智能 × 低爬宠 — 出海计划↑</div></div>
+        </div>
+        <div class="legend-divider"></div>
+        <div class="legend-item" id="leg-dv" onclick="highlightLegend('dv')">
+          <div class="legend-dot" style="background:var(--text-muted);">达</div>
+          <div class="legend-info"><div class="legend-name">达芬奇黑洞</div><div class="legend-pos">低智能 × 高爬宠 — 最大转化池</div></div>
+        </div>
+        <div class="legend-item" id="leg-et" onclick="highlightLegend('et')">
+          <div class="legend-dot" style="background:var(--text-muted);">E</div>
+          <div class="legend-info"><div class="legend-name">Exo Terra</div><div class="legend-pos">低智能 × 中爬宠 — 全球出海机会</div></div>
+        </div>
+        <div class="legend-item" id="leg-rz" onclick="highlightLegend('rz')">
+          <div class="legend-dot" style="background:var(--orange);">R</div>
+          <div class="legend-info"><div class="legend-name">REPTIZOO 瑞皮</div><div class="legend-pos">低中智能 × 中爬宠 — 智能化提速</div></div>
+        </div>
+        <div class="legend-divider"></div>
+        <div class="legend-item" id="leg-pt" onclick="highlightLegend('pt')">
+          <div class="legend-dot" style="background:var(--cyan);">P</div>
+          <div class="legend-info"><div class="legend-name">宠尔顿 PILTON</div><div class="legend-pos">中智能 × 低爬宠 — 全品类宠物舱</div></div>
+        </div>
+        <div class="legend-item" id="leg-hs" onclick="highlightLegend('hs')">
+          <div class="legend-dot" style="background:var(--text-muted);">H</div>
+          <div class="legend-info"><div class="legend-name">Herpstat</div><div class="legend-pos">低智能 × 高爬宠 — 海外温控天花板</div></div>
+        </div>
+        <div class="legend-item" id="leg-fx" onclick="highlightLegend('fx')">
+          <div class="legend-dot" style="background:var(--purple);">F</div>
+          <div class="legend-info"><div class="legend-name">FEINX 菲利克斯</div><div class="legend-pos">低中智能 × 低爬宠 — 小宠智能舱</div></div>
+        </div>
+        <div class="legend-divider"></div>
+        <div class="legend-item" id="leg-lw" onclick="highlightLegend('lw')">
+          <div class="legend-dot" style="background:var(--red);">灵</div>
+          <div class="legend-info"><div class="legend-name">灵尾科技 🆕</div><div class="legend-pos">高智能 × 中爬宠 — AI爬宠伴侣+出海先行↑</div></div>
+        </div>
+      </div>
     </div>
   </div>
 
   <!-- ===== STRATEGY SUGGESTIONS ===== -->
   <div class="section" id="strategy">
-    <h2 class="section-title">💡 战略建议 <span class="count">— 基于13款竞品分析的核心行动</span></h2>
+    <h2 class="section-title">🚀 战略建议 <span class="count">— 基于14款竞品分析的核心行动 · 含时间节点和责任方</span></h2>
     <div class="strategy-grid">
       <div class="strategy-card">
         <div class="num">01</div>
         <h4>🔴 紧急：物种数据库先发冲刺</h4>
         <p>爬托邦无AI、InnoYolo无物种——200+物种自适应引擎是6-12个月无人能复制的壁垒。Q3 Nano发布前必须上线50+物种，Q4达100+。</p>
+        <div class="strategy-meta">
+          <span class="strategy-meta-tag deadline">⏰ Q3 2026 前完成</span>
+          <span class="strategy-meta-tag owner">👤 产品+AI工程团队</span>
+        </div>
       </div>
       <div class="strategy-card">
         <div class="num">02</div>
         <h4>🔴 紧急：D2C渠道是利润生死线</h4>
         <p>渠道折扣使硬件毛利从49%降至21%，D2C(85%毛利)是唯一出路。小红书+私域+社群三线并进，M4前D2C占比需>40%。</p>
+        <div class="strategy-meta">
+          <span class="strategy-meta-tag deadline">⏰ M4 前启动</span>
+          <span class="strategy-meta-tag owner">👤 市场+增长团队</span>
+        </div>
       </div>
       <div class="strategy-card">
         <div class="num">03</div>
         <h4>🟡 重要：3D造景配件"剃须刀刀片"</h4>
         <p>配件毛利率65%+复购，爬托邦"蘑菇怪"已验证。6路扩展接口是硬件基础，3D造景/温控模组/喂食器是复购引擎。</p>
+        <div class="strategy-meta">
+          <span class="strategy-meta-tag deadline">⏰ Q4 2026 首批配件</span>
+          <span class="strategy-meta-tag owner">👤 产品+供应链团队</span>
+        </div>
       </div>
       <div class="strategy-card">
         <div class="num">04</div>
         <h4>🟡 重要：达芬奇黑洞用户转化</h4>
         <p>行业品牌龙头=最大用户池。策略：兼容其配件标准+以旧换新+KOL"从传统到智能"体验内容。</p>
+        <div class="strategy-meta">
+          <span class="strategy-meta-tag deadline">⏰ M3 起持续推进</span>
+          <span class="strategy-meta-tag owner">👤 市场+内容团队</span>
+        </div>
       </div>
       <div class="strategy-card">
         <div class="num">05</div>
-        <h4>🟢 布局：出海窗口期</h4>
-        <p>Exo Terra/Herpstat无智能方案，海外用户正在等待智能升级。M18启动海外，先打爬宠论坛+亚马逊。</p>
+        <h4>🔴 紧急：出海窗口期关闭中——灵尾已先行</h4>
+        <p>灵尾科技2026年连战CES/AWE/日本宠物展/Interzoo四场全球大展，Interzoo现场签下超千万元意向订单。InnoYolo也已宣布Indiegogo出海。VIVOX需加速：M12前完成海外版App+产品认证，M15前启动亚马逊/独立站。物种数据库是海外核心卖点。</p>
+        <div class="strategy-meta">
+          <span class="strategy-meta-tag deadline">⏰ M12 海外版就绪</span>
+          <span class="strategy-meta-tag owner">👤 战略+海外市场</span>
+        </div>
       </div>
       <div class="strategy-card">
         <div class="num">06</div>
         <h4>🟢 布局：AI视觉差异化加码</h4>
-        <p>当前0家竞品有AI视觉健康监测。双摄+红外蜕皮预警是VIVOX独占功能，需在M11前完成AI模块正式上线。</p>
+        <p>当前0家竞品有AI视觉健康监测。双摄+红外蜕皮预警是VIVOX独占功能，需在M11前完成AI模块正式上线，并积累训练数据。</p>
+        <div class="strategy-meta">
+          <span class="strategy-meta-tag deadline">⏰ M11 正式上线</span>
+          <span class="strategy-meta-tag owner">👤 AI研发团队</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1372,13 +1747,20 @@ tbody tr:nth-child(even):hover { background: var(--bg-card-hover); }
 
 <!-- FOOTER -->
 <div class="footer">
-  🦎 智能爬宠箱竞品观察大屏 · VIVOX Competitive Intelligence · 数据更新于 2026-05-17<br>
-  本报告由 AI 自动搜集网络公开信息并分析生成，重要决策请由产品负责人审定
+  🦎 智能爬宠箱竞品观察大屏 v2.1 · VIVOX Competitive Intelligence · 数据更新于 2026-05-22<br>
+  本报告由 AI 自动搜集网络公开信息并分析生成，重要决策请由产品负责人审定 ·
+  <a href="https://liujie0591mail-win.github.io/vivox-bp/competitive-analysis.html">📡 在线版本</a>
 </div>
 
 <script>
-// Filter by category
+// ===== 全局搜索 (升级版：同时过滤卡片+新闻) =====
 let currentFilter = 'all';
+let currentNewsFilter = 'all';
+
+function globalSearch() {
+  applyFilters();
+  filterNews();
+}
 
 function setFilter(el) {
   document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
@@ -1387,29 +1769,63 @@ function setFilter(el) {
   applyFilters();
 }
 
-// Search + filter
-function filterCards() { applyFilters(); }
-
 function applyFilters() {
   const query = document.getElementById('searchInput').value.toLowerCase().trim();
   const cards = document.querySelectorAll('.comp-card');
-
   cards.forEach(card => {
     const cat = card.dataset.category;
     const keywords = (card.dataset.keywords || '').toLowerCase();
     const text = card.textContent.toLowerCase();
-
-    // Category filter
     const catMatch = currentFilter === 'all' || cat === currentFilter;
-
-    // Search filter
     const searchMatch = !query || keywords.includes(query) || text.includes(query);
-
     card.style.display = (catMatch && searchMatch) ? '' : 'none';
   });
 }
 
-// Smooth scroll for nav links
+// ===== 新闻品牌过滤 (新增) =====
+function setNewsFilter(el) {
+  document.querySelectorAll('.news-filter-tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  currentNewsFilter = el.dataset.brand;
+  filterNews();
+}
+
+function filterNews() {
+  const query = document.getElementById('searchInput').value.toLowerCase().trim();
+  const items = document.querySelectorAll('#newsList .news-item');
+  items.forEach(item => {
+    const brand = item.dataset.brand || '';
+    const text = item.textContent.toLowerCase();
+    const brandMatch = currentNewsFilter === 'all' || text.includes(currentNewsFilter.toLowerCase()) || brand === currentNewsFilter;
+    const searchMatch = !query || text.includes(query);
+    item.classList.toggle('hidden', !(brandMatch && searchMatch));
+  });
+}
+
+// ===== 矩阵图例联动高亮 (新增) =====
+let activeLegend = null;
+
+function highlightLegend(id) {
+  // 清除旧的
+  if (activeLegend) {
+    const oldDot = document.getElementById('dot-' + activeLegend);
+    const oldLeg = document.getElementById('leg-' + activeLegend);
+    if (oldDot) oldDot.classList.remove('active-legend');
+    if (oldLeg) oldLeg.classList.remove('active');
+  }
+  // 如果点同一个则取消高亮
+  if (activeLegend === id) {
+    activeLegend = null;
+    return;
+  }
+  activeLegend = id;
+  const dot = document.getElementById('dot-' + id);
+  const leg = document.getElementById('leg-' + id);
+  if (dot) dot.classList.add('active-legend');
+  if (leg) leg.classList.add('active');
+}
+
+// ===== 平滑滚动 =====
 document.querySelectorAll('.section-nav a').forEach(a => {
   a.addEventListener('click', e => {
     e.preventDefault();
